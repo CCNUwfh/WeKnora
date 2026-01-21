@@ -136,7 +136,7 @@ func (s *knowledgeBaseService) ListKnowledgeBases(ctx context.Context) ([]*types
 		// Get knowledge count
 		switch kb.Type {
 		case types.KnowledgeBaseTypeDocument:
-			knowledgeCount, err := s.kgRepo.CountKnowledgeByKnowledgeBaseID(ctx, tenantID, kb.ID)
+			knowledgeCount, err := s.kgRepo.CountKnowledgeByKnowledgeBaseID(ctx, kb.TenantID, kb.ID)
 			if err != nil {
 				logger.Warnf(ctx, "Failed to get knowledge count for knowledge base %s: %v", kb.ID, err)
 			} else {
@@ -144,7 +144,7 @@ func (s *knowledgeBaseService) ListKnowledgeBases(ctx context.Context) ([]*types
 			}
 		case types.KnowledgeBaseTypeFAQ:
 			// Get chunk count
-			chunkCount, err := s.chunkRepo.CountChunksByKnowledgeBaseID(ctx, tenantID, kb.ID)
+			chunkCount, err := s.chunkRepo.CountChunksByKnowledgeBaseID(ctx, kb.TenantID, kb.ID)
 			if err != nil {
 				logger.Warnf(ctx, "Failed to get chunk count for knowledge base %s: %v", kb.ID, err)
 			} else {
@@ -155,7 +155,7 @@ func (s *knowledgeBaseService) ListKnowledgeBases(ctx context.Context) ([]*types
 		// Check if there is a processing import task
 		processingCount, err := s.kgRepo.CountKnowledgeByStatus(
 			ctx,
-			tenantID,
+			kb.TenantID,
 			kb.ID,
 			[]string{"pending", "processing"},
 		)

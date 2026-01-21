@@ -62,7 +62,7 @@ BINARY_NAME=WeKnora
 MAIN_PATH=./cmd/server
 
 # Docker related variables
-DOCKER_IMAGE=wechatopenai/weknora-app
+DOCKER_IMAGE=smzdm/weknora-app
 DOCKER_TAG=latest
 
 # Platform detection
