@@ -128,11 +128,18 @@ func (s *knowledgeBaseService) ListKnowledgeBases(ctx context.Context) ([]*types
 		})
 		return nil, err
 	}
-
+	// If the request comes from input field, also include admin knowledge bases
+	if ctx.Value(types.KnowledgeBaseSourceContextKey) == "input-field" {
+		adminKbs, err := s.repo.ListKnowledgeBasesByTenantID(ctx, types.AdminTenantID)
+		if err != nil {
+			logger.Errorf(ctx, "Failed to list admin knowledge bases: %v", err)
+		} else {
+			kbs = append(kbs, adminKbs...)
+		}
+	}
 	// Query knowledge count and chunk count for each knowledge base
 	for _, kb := range kbs {
 		kb.EnsureDefaults()
-
 		// Get knowledge count
 		switch kb.Type {
 		case types.KnowledgeBaseTypeDocument:

@@ -64,7 +64,7 @@ func (r *knowledgeBaseRepository) ListKnowledgeBasesByTenantID(
 	ctx context.Context, tenantID uint64,
 ) ([]*types.KnowledgeBase, error) {
 	var kbs []*types.KnowledgeBase
-	if err := r.db.WithContext(ctx).Where("tenant_id IN (?,?) AND is_temporary = ?", tenantID, adminTenantId, false).
+	if err := r.db.WithContext(ctx).Where("tenant_id = ? AND is_temporary = ?", tenantID, false).
 		Order("created_at DESC").Find(&kbs).Error; err != nil {
 		return nil, err
 	}

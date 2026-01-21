@@ -321,7 +321,7 @@ func (r *knowledgeRepository) SearchKnowledge(
 		Table("knowledges").
 		Select("knowledges.*, knowledge_bases.name as knowledge_base_name").
 		Joins("JOIN knowledge_bases ON knowledge_bases.id = knowledges.knowledge_base_id").
-		Where("knowledges.tenant_id IN (?,?)", tenantID, adminTenantId).
+		Where("knowledges.tenant_id IN (?,?)", tenantID, types.AdminTenantID).
 		Where("knowledge_bases.type = ?", types.KnowledgeBaseTypeDocument).
 		Where("knowledges.deleted_at IS NULL")
 

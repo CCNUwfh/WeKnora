@@ -1,8 +1,16 @@
 import { get, post, put, del, postUpload, getDown } from "../../utils/request";
 
 // 知识库管理 API（列表、创建、获取、更新、删除、复制）
-export function listKnowledgeBases() {
-  return get(`/api/v1/knowledge-bases`);
+export function listKnowledgeBases(source?: string) {
+  // 构建 query 参数
+  const queryParams = new URLSearchParams();
+  if (source) {
+    queryParams.append('source', source);
+  }
+  const queryString = queryParams.toString();
+  // 拼接路径和 query 参数
+  const requestUrl = `/api/v1/knowledge-bases${queryString ? `?${queryString}` : ''}`;
+  return get(requestUrl);
 }
 
 export function createKnowledgeBase(data: { 

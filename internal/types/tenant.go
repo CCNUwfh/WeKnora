@@ -10,6 +10,10 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	AdminTenantID = 10000
+)
+
 // retrieverEngineMapping maps RETRIEVE_DRIVER values to retriever engine configurations
 var retrieverEngineMapping = map[string][]RetrieverEngineParams{
 	"postgres": {

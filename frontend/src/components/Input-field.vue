@@ -279,7 +279,7 @@ const inputPlaceholder = computed(() => {
 // 加载知识库列表
 const loadKnowledgeBases = async () => {
   try {
-    const response: any = await listKnowledgeBases();
+    const response: any = await listKnowledgeBases("input-field");
     if (response.data && Array.isArray(response.data)) {
       const validKbs = response.data.filter((kb: any) => 
         kb.embedding_model_id && kb.embedding_model_id !== '' &&

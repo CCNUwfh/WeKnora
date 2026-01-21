@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -215,6 +216,7 @@ func (h *KnowledgeBaseHandler) GetKnowledgeBase(c *gin.Context) {
 // @Router       /knowledge-bases [get]
 func (h *KnowledgeBaseHandler) ListKnowledgeBases(c *gin.Context) {
 	ctx := c.Request.Context()
+	ctx = context.WithValue(ctx, types.KnowledgeBaseSourceContextKey, c.Query("source"))
 
 	// Get all knowledge bases for this tenant
 	kbs, err := h.service.ListKnowledgeBases(ctx)

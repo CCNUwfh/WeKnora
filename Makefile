@@ -62,7 +62,7 @@ BINARY_NAME=WeKnora
 MAIN_PATH=./cmd/server
 
 # Docker related variables
-DOCKER_IMAGE=smzdm/weknora-app
+DOCKER_REPO=smzdm
 DOCKER_TAG=latest
 
 # Platform detection
@@ -103,15 +103,15 @@ docker-build-app:
 		--build-arg COMMIT_ID_ARG="$$COMMIT_ID" \
 		--build-arg BUILD_TIME_ARG="$$BUILD_TIME" \
 		--build-arg GO_VERSION_ARG="$$GO_VERSION" \
-		-f docker/Dockerfile.app -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+		-f docker/Dockerfile.app -t $(DOCKER_REPO)/weknora-app:$(DOCKER_TAG) .
 
 # Build docreader Docker image
 docker-build-docreader:
-	docker build --platform $(PLATFORM) -f docker/Dockerfile.docreader -t wechatopenai/weknora-docreader:latest .
+	docker build --platform $(PLATFORM) -f docker/Dockerfile.docreader -t $(DOCKER_REPO)/weknora-docreader:$(DOCKER_TAG) .
 
 # Build frontend Docker image
 docker-build-frontend:
-	docker build --platform $(PLATFORM) -f frontend/Dockerfile -t wechatopenai/weknora-ui:latest frontend/
+	docker build --platform $(PLATFORM) -f frontend/Dockerfile -t $(DOCKER_REPO)/weknora-ui:$(DOCKER_TAG) frontend/
 
 # Build all Docker images
 docker-build-all: docker-build-app docker-build-docreader docker-build-frontend

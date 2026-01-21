@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: wechatopenai/weknora-ui:${WEKNORA_VERSION:-latest}
+    image: smzdm/weknora-ui:${WEKNORA_VERSION:-latest}
     build:
       context: ./frontend
       args:
