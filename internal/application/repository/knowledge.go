@@ -15,6 +15,8 @@ var ErrKnowledgeNotFound = errors.New("knowledge not found")
 // omitFieldsOnUpdate defines fields to omit when updating knowledge
 var omitFieldsOnUpdate = []string{"DeletedAt"}
 
+const adminTenantId = 10000
+
 // knowledgeRepository implements knowledge base and knowledge repository interface
 type knowledgeRepository struct {
 	db *gorm.DB
@@ -319,7 +321,7 @@ func (r *knowledgeRepository) SearchKnowledge(
 		Table("knowledges").
 		Select("knowledges.*, knowledge_bases.name as knowledge_base_name").
 		Joins("JOIN knowledge_bases ON knowledge_bases.id = knowledges.knowledge_base_id").
-		Where("knowledges.tenant_id = ?", tenantID).
+		Where("knowledges.tenant_id IN (?,?)", tenantID, adminTenantId).
 		Where("knowledge_bases.type = ?", types.KnowledgeBaseTypeDocument).
 		Where("knowledges.deleted_at IS NULL")
 
